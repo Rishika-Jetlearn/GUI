@@ -1,3 +1,4 @@
+#login page
 from tkinter import*
 #create main window
 window=Tk()
