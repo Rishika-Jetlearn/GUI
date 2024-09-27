@@ -1,4 +1,4 @@
-#login page
+#login
 from tkinter import*
 #create main window
 window=Tk()
@@ -19,7 +19,7 @@ type.place(x= 100 ,y= 50)
 password=Label(window,text="Password")
 password.place(x=50,y=100)
 ps=Entry(window,show="*")
-ps.place(x=150,y=100)
+ps.place(x=120,y=100)
 #button
 button=Button(window,text="Login")
 button.place(x=50,y=150 )
