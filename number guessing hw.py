@@ -4,7 +4,13 @@ def computer():
     com=random.randint(1,20)
 
     if user<com:
-
+        low.config(text="Your guess is too low")
+    elif user<com:
+        high.config(text="Your guess is too high")
+    elif user==com:
+        right.config(text="You are correct!")
+    else:
+        error.config(text="Please enter a number from 1-20")
 
 
 
