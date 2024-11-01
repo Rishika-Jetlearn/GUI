@@ -8,17 +8,18 @@ def logic(player):
     computer=random.choice(options)
     if computer==player:
         result.config(text="Tie")
-    elif (computer==rock and player==sissors) or (computer==paper and player==rock) or (computer==sissors and player==paper):
+    elif (computer=="rock" and player=="sissors") or (computer=="paper" and player=="rock") or (computer=="sissors" and player=="paper"):
         result.config(text="Computer wins!")
         com=com+1
+        print("computer scored ", com)
     else:
         result.config(text="You win!")
         ply=ply+1
-
+        print("player scored ", ply)
     youselec.config(text=f"You selected: {player}")
     comselec.config(text=f"Computer selected: {computer}")
-    playersc.config(f"Player score {str(ply)}")
-    comsc.config(f"computer score {str(com)}")
+    playersc.config(f"Player score {ply}")
+    comsc.config(f"computer score {com}")
 
 window=Tk()
 window.geometry("300x400")
