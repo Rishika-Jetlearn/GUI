@@ -5,7 +5,7 @@ window.geometry("200x300")
 window.title("Messages")
 
 #information
-messagebox.showinfo("info","hello.")
+messagebox.showinfo("info","Battery low.")
 
 #warning
 messagebox.showwarning("WARNING!","Low battery")
@@ -13,12 +13,14 @@ messagebox.showwarning("WARNING!","Low battery")
 #error
 messagebox.showerror("Error :/","Error")
 
-#ask question
-print(messagebox.askquestion("IMPORTANT!","Do you like coding?"))
 
 #askokcancel
-print(messagebox.askokcancel("Hi","Hi"))
+print(messagebox.askokcancel("!","Turn on battry saver?"))
 
 #askyesorno
-print(messagebox.askyesno("Yes","Hello."))
+print(messagebox.askyesno("Battery saver","No battery saver found,try again?"))
+
+
+#ask question
+print(messagebox.askquestion("IMPORTANT!","Do you like coding?"))
 window.mainloop()
