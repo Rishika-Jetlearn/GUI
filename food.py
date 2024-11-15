@@ -9,11 +9,13 @@ image1=PhotoImage(file="pizza.png")
 pizza=Button(window,image=image1,width=62,height=50)
 pizza.grid(row=2,column=2,padx=130,pady=50)
 
-chips=Button(window)
+image2=PhotoImage(file="chips.png")
+chips=Button(window,image=image2)
 chips.grid(row=3,column=2,padx=130,pady=50)
 
-burger=Button(window)
-burger.grid(row=4,column=2,padx=130,pady=50)
+"""image3=PhotoImage(file="burger.png")
+burger=Button(window,image=image3)
+burger.grid(row=4,column=2,padx=130,pady=50)"""
 
 
 #lables
