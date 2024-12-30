@@ -1,69 +1,115 @@
-from tkinter import*
-window=Tk()
+from tkinter import *
+from tkinter import messagebox
+from tkinter.filedialog import asksaveasfile
+
+window = Tk()
 window.geometry("800x400")
-#listbox
-lb=Listbox(window)
-lb.grid(row=4,column=1)
-#frames
-frame=Frame(window)
-frame.grid(row=2,column=2)
-
-frame2=Frame(window)
-frame2.grid(row=2,column=3)
-
-frame3=Frame(window)
-frame3.grid(row=3,column=1)
-#labels
-title=Label(window,text="Student REPORT LOG.")
-title.grid(row=1,column=1)
-
-name=Label(window,text="name: ")
-name.grid(row=2,column=1)
-rollnum=Label(window,text="Roll number: ")
-rollnum.grid(row=3,column=1)
-
-science=Label(frame,text="science marks: ")
-science.grid(row=1,column=2,padx=40)
-
-maths=Label(frame,text="maths marks: ")
-maths.grid(row=2,column=2,padx=40)
-
-percentage=Label(frame,text="percentage: ")
-percentage.grid(row=3,column=2,padx=40)
-
-#entrys
-
-name_ent=Entry(frame2)
-name_ent.grid(row=2,column=1,pady=15)
-
-rollnum_ent=Entry(frame2)
-rollnum_ent.grid(row=3,column=1,pady=15)
-
-science_ent=Entry(frame2)
-science_ent.grid(row=4,column=1,pady=15)
-
-maths_ent=Entry(frame2)
-maths_ent.grid(row=5,column=1,pady=15)
-
-per_ent=Entry(frame2)
-per_ent.grid(row=6,column=1,pady=15)
-
-#buttons
-edit=Button(frame3,text="Edit",padx=10)
-edit.grid(row=1,column=1)
-
-delete=Button(frame3,text="Delete",padx=20)
-delete.grid(row=1,column=2)
-
-save=Button(window,text="Save")
-save.grid(row=4,column=2,pady=30,padx=40)
-
-add=Button(window,text="Add/update")
-add.grid(row=3,column=3,padx=40)
-
-open=Button(window,text="open")
-open.grid(row=3,column=3,padx=40)
 
 
 
+
+store={}
+def add_update():
+    n=name_ent.get()
+    if n=="":
+        messagebox.showerror("Error","Name can not be empty!")
+    else:
+        if n not in store:
+            store[n]=(rollnum_ent.get(),science_ent.get(),maths_ent.get(),per_ent.get())
+            lb.insert(END,n)
+            clear()
+        
+        else:
+            messagebox.showerror("Error","Same name can not be added again")
+
+
+def clear():
+    rollnum_ent.delete(0,END)
+    name_ent.delete(0,END)
+    science_ent.delete(0,END)
+    maths_ent.delete(0,END)
+    per_ent.delete(0,END)
+
+
+def save_info():
+    asf=asksaveasfile()
+    if asf:
+        print(store,file=asf)
+    else:
+        messagebox.showerror("Error","File not saved :/")
+
+def dele():
+    option = lb.curselection()
+    if option:
+        lb.delete(option)
+
+# Title 
+title = Label(window, text="Student REPORT LOG.", font=("Arial", 16, "bold"))
+title.grid(row=0, column=0, columnspan=3, pady=10)
+
+# Labels
+name = Label(window, text="Name: ")
+name.grid(row=1, column=0, padx=10, pady=5)
+
+rollnum = Label(window, text="Roll number: ")
+rollnum.grid(row=2, column=0, padx=10, pady=5)
+
+# Entry 
+name_ent = Entry(window, width=30)
+name_ent.grid(row=1, column=1, pady=5)
+
+rollnum_ent = Entry(window, width=30)
+rollnum_ent.grid(row=2, column=1, pady=5)
+
+# Frames
+frame = Frame(window)
+frame.grid(row=3, column=0, columnspan=2, pady=10)
+
+frame2 = Frame(window)
+frame2.grid(row=4, column=0, columnspan=2, pady=10)
+
+frame3 = Frame(window)
+frame3.grid(row=5, column=0, columnspan=2, pady=10)
+
+# Subject labels and entry
+science = Label(frame, text="Science marks: ")
+science.grid(row=0, column=0, padx=10, pady=5)
+
+science_ent = Entry(frame, width=20)
+science_ent.grid(row=0, column=1, padx=10, pady=5)
+
+maths = Label(frame, text="Maths marks: ")
+maths.grid(row=1, column=0, padx=10, pady=5)
+
+maths_ent = Entry(frame, width=20)
+maths_ent.grid(row=1, column=1, padx=10, pady=5)
+
+percentage = Label(frame, text="Percentage: ")
+percentage.grid(row=2, column=0, padx=10, pady=5)
+
+per_ent = Entry(frame, width=20)
+per_ent.grid(row=2, column=1, padx=10, pady=5)
+
+# Listbox
+lb = Listbox(window, height=10, width=50)
+lb.grid(row=6, column=0, columnspan=2, pady=10)
+
+# Buttons
+add = Button(frame2, text="Add/Update", padx=10,command=add_update)
+add.grid(row=0, column=0, padx=10, pady=5)
+
+save = Button(frame2, text="Save", padx=10,command=save_info)
+save.grid(row=0, column=1, padx=10, pady=5)
+
+open_btn = Button(frame2, text="Open", padx=10)
+open_btn.grid(row=0, column=2, padx=10, pady=5)
+
+edit = Button(frame3, text="Edit", padx=10)
+edit.grid(row=0, column=0, padx=10, pady=5)
+
+delete = Button(frame3, text="Delete", padx=10,command=dele)
+delete.grid(row=0, column=1, padx=10, pady=5)
+
+# Run the application
 window.mainloop()
+

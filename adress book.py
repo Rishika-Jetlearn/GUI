@@ -1,6 +1,7 @@
 from tkinter import*
 from tkinter import messagebox
-from tkinter.filedialog import asksaveasfile
+from tkinter.filedialog import asksaveasfile,askopenfile
+import os
 window=Tk()
 
 
@@ -27,15 +28,44 @@ def clear():
     mobile_ent.delete(0,END)
     email_ent.delete(0,END)
 
+def reset():
+    clear()
+    lb.delete(0,END)
+    store.clear()
+    title.config(text="Adress book")
+
 
 def save_info():
     asf=asksaveasfile()
     if asf:
         print(store,file=asf)
+        reset()
     else:
         messagebox.showerror("Error","File not saved :/")
+    
 
+def dele():
+    option = lb.curselection()
+    print(option)
+    if option:
+        a=lb.get(option)
+        lb.delete(option)
+        del store[a]
+    else:
+        messagebox.showwarning("Warning","Please select an item from the listbox to delete.")
 
+def open_file():
+    global store
+    reset()
+    aof=askopenfile()
+    if aof:
+        store=eval(aof.read())
+        for i in store:
+            lb.insert(END,i)
+        print(aof.name)
+        title.config(text=os.path.basename(aof.name))
+    else:
+        messagebox.showerror("Error","Something went wrong-please try again")
 #window.geometry("200x350")
 #listbox
 lb=Listbox(window)
@@ -89,7 +119,7 @@ birthday_ent.grid(row=6,column=1,pady=15)
 edit=Button(frame3,text="Edit",padx=10)
 edit.grid(row=1,column=1)
 
-delete=Button(frame3,text="Delete",padx=20)
+delete=Button(frame3,text="Delete",padx=20,command=dele)
 delete.grid(row=1,column=2)
 
 save=Button(window,text="Save",command=save_info)
@@ -97,6 +127,9 @@ save.grid(row=4,column=1,pady=30,padx=40,columnspan=2)
 
 add=Button(window,text="Add/update",command=add_update)
 add.grid(row=3,column=3,padx=40)
+
+open=Button(window,text="Open",command=open_file)
+open.grid(row=1,column=2)
 
 
 
