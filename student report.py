@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import messagebox
-from tkinter.filedialog import asksaveasfile
-
+from tkinter.filedialog import asksaveasfile,askopenfile
+import os
 window = Tk()
 window.geometry("800x400")
 
@@ -21,6 +21,13 @@ def add_update():
         
         else:
             messagebox.showerror("Error","Same name can not be added again")
+            clear()
+
+def reset():
+    clear()
+    lb.delete(0,END)
+    store.clear()
+    title.config(text="Adress book")
 
 
 def clear():
@@ -40,9 +47,26 @@ def save_info():
 
 def dele():
     option = lb.curselection()
+    print(option)
     if option:
+        a=lb.get(option)
         lb.delete(option)
+        del store[a]
+    else:
+        messagebox.showwarning("Warning","Please select an item from the listbox to delete.")
 
+def open_file():
+    global store
+    reset()
+    aof=askopenfile()
+    if aof:
+        store=eval(aof.read())
+        for i in store:
+            lb.insert(END,i)
+        print(aof.name)
+        title.config(text=os.path.basename(aof.name))
+    else:
+        messagebox.showerror("Error","Something went wrong-please try again")
 # Title 
 title = Label(window, text="Student REPORT LOG.", font=("Arial", 16, "bold"))
 title.grid(row=0, column=0, columnspan=3, pady=10)
@@ -101,7 +125,7 @@ add.grid(row=0, column=0, padx=10, pady=5)
 save = Button(frame2, text="Save", padx=10,command=save_info)
 save.grid(row=0, column=1, padx=10, pady=5)
 
-open_btn = Button(frame2, text="Open", padx=10)
+open_btn = Button(frame2, text="Open", padx=10,command=open_file)
 open_btn.grid(row=0, column=2, padx=10, pady=5)
 
 edit = Button(frame3, text="Edit", padx=10)
@@ -112,4 +136,3 @@ delete.grid(row=0, column=1, padx=10, pady=5)
 
 # Run the application
 window.mainloop()
-
