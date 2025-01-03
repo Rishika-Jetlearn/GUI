@@ -7,6 +7,31 @@ window=Tk()
 
 #dictionary
 store={}
+
+def action(accept):
+    w2=Toplevel(window)
+    cs=lb.curselection()
+    if cs:
+        na=lb.get(cs)
+        inf=store[na]
+        info=f"Name: {na}\nAdress: {inf[1]}\nMobile: {inf[2]}\nEmail: {inf[3]}\nBirthday: {inf[0]}"
+        la=Label(w2,text=info)
+        la.pack()
+
+def editing():
+    cs=lb.curselection()
+    if cs:
+        na=lb.get(cs)
+        name_ent.insert(0,na)
+
+        inf=store[na]
+        adress_ent.insert(0,inf[1])
+        birthday_ent.insert(0,inf[0])
+        mobile_ent.insert(0,inf[2])
+        email_ent.insert(0,inf[3])
+
+
+
 def add_update():
     n=name_ent.get()
     print(n,"hi")
@@ -14,12 +39,14 @@ def add_update():
         messagebox.showerror("Error","Name can not be empty!")
     else:
         if n not in store:
-            store[n]=(birthday_ent.get(),adress_ent.get(),mobile_ent.get(),email_ent.get())
             lb.insert(END,n)
             clear()
         
-        else:
+        """else:
             messagebox.showerror("Error","Same name can not be added again")
+            clear()"""
+        store[n]=(birthday_ent.get(),adress_ent.get(),mobile_ent.get(),email_ent.get())
+
 
 def clear():
     birthday_ent.delete(0,END)
@@ -70,6 +97,7 @@ def open_file():
 #listbox
 lb=Listbox(window)
 lb.grid(row=2,column=1)
+lb.bind("<<ListboxSelect>>",action)
 #frames
 frame=Frame(window)
 frame.grid(row=2,column=2)
@@ -116,7 +144,7 @@ birthday_ent=Entry(frame2)
 birthday_ent.grid(row=6,column=1,pady=15)
 
 #buttons
-edit=Button(frame3,text="Edit",padx=10)
+edit=Button(frame3,text="Edit",padx=10,command=editing)
 edit.grid(row=1,column=1)
 
 delete=Button(frame3,text="Delete",padx=20,command=dele)
