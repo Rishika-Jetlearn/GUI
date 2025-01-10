@@ -40,12 +40,12 @@ def add_update():
     else:
         if n not in store:
             lb.insert(END,n)
-            clear()
         
         """else:
             messagebox.showerror("Error","Same name can not be added again")
             clear()"""
         store[n]=(birthday_ent.get(),adress_ent.get(),mobile_ent.get(),email_ent.get())
+        clear()
 
 
 def clear():
