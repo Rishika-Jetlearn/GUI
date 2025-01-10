@@ -5,7 +5,15 @@ import os
 window = Tk()
 window.geometry("800x400")
 
-
+def action(accept):
+    window2=Toplevel(window)
+    cs=lb.curselection()
+    if cs:
+        nam=lb.get(cs)
+        inf=store[nam]
+        info=f"Name: {nam}\nroll number: {inf[1]}\nscience marks: {inf[2]}\n maths marks: {inf[3]}\n percentage: {inf[0]}"
+        la=Label(window2,text=info)
+        la.pack()
 
 
 store={}
@@ -117,7 +125,8 @@ per_ent.grid(row=2, column=1, padx=10, pady=5)
 # Listbox
 lb = Listbox(window, height=10, width=50)
 lb.grid(row=6, column=0, columnspan=2, pady=10)
-
+lb.bind("<<ListboxSelect>>",action)
+S
 # Buttons
 add = Button(frame2, text="Add/Update", padx=10,command=add_update)
 add.grid(row=0, column=0, padx=10, pady=5)
