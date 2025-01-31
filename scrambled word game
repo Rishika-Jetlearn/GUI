@@ -1,0 +1,72 @@
+from tkinter import*
+from tkinter import messagebox
+import random
+from gtts import gTTS
+import os
+
+#window
+window =Tk()
+window.title("Scrambled Word Game")
+window.geometry("400x300")
+
+
+def speech():
+    global txt_sp
+    txt_sp=gTTS(text="",lang="en")
+    txt_sp.save("audio.wav")
+    os.system("audio.wav")
+
+
+
+word_list = ["python", "tkinter", "scramble", "random", "developer", "keyboard", "monitor", "laptop", "mouse"]
+
+def scramble_word(word):
+    word = list(word)
+    print(random.shuffle(word))
+    random.shuffle(word)
+    return "".join(word) 
+
+
+def new_word():
+    global correct_word
+    correct_word = random.choice(word_list)
+    scrambled = scramble_word(correct_word)
+    word_label.config(text=scrambled)
+    entry.delete(0,END)
+    result_label.config(text="")
+
+def check_word():
+    user_input = entry.get()
+    if user_input == correct_word:
+        result_label.config(text="✅ Correct!", fg="green")
+        txt_sp.config(text="correct!")
+    else:
+        result_label.config(text=f"❌ Wrong! Correct: {correct_word}", fg="red")
+        txt_sp.config(text="Wrong,try again!")
+
+
+# Label displaying scrambled word
+word_label = Label(window, text="", font=("Arial", 24, "bold"), pady=20)
+word_label.pack()
+
+# Entry
+entry = Entry(window, font=("Arial", 16))
+entry.pack(pady=10)
+
+# Button to check the answer
+check_button =Button(window, text="Check", font=("Arial", 14), command=check_word)
+check_button.pack(pady=5)
+
+# Label to show result
+result_label = Label(window, text="", font=("Arial", 16))
+result_label.pack()
+
+# Button to get a new word
+next_button = Button(window, text="Next Word", font=("Arial", 14), command=new_word)
+next_button.pack(pady=10)
+
+# Initialize the first word
+new_word()
+
+# Run the application
+window.mainloop()
