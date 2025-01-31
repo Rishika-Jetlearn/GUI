@@ -10,9 +10,9 @@ window.title("Scrambled Word Game")
 window.geometry("400x300")
 
 
-def speech():
+def speech(txt):
     global txt_sp
-    txt_sp=gTTS(text="",lang="en")
+    txt_sp=gTTS(text=txt,lang="en")
     txt_sp.save("audio.wav")
     os.system("audio.wav")
 
@@ -39,10 +39,10 @@ def check_word():
     user_input = entry.get()
     if user_input == correct_word:
         result_label.config(text="✅ Correct!", fg="green")
-        txt_sp.config(text="correct!")
+        speech("Correct!")
     else:
         result_label.config(text=f"❌ Wrong! Correct: {correct_word}", fg="red")
-        txt_sp.config(text="Wrong,try again!")
+        speech("Wrong!")
 
 
 # Label displaying scrambled word
